@@ -1,0 +1,250 @@
+/* === Tailwind === */
+@import "tailwindcss";
+
+/* === Theme tokens exposed to Tailwind utilities === */
+/* Literal font names required — @theme inline resolves at CSS parse time,
+   not runtime, so var() references would fall back to serif. */
+@theme inline {
+  --color-background: #0C0F0A;
+  --color-foreground: #F0F4E8;
+  --color-primary: #4ADE80;
+  --color-secondary: #22C55E;
+  --color-accent: #FBBF24;
+  --color-muted: #6B7260;
+  --color-surface: #1A1F16;
+  --font-sans: "DM Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+  --font-display: "Sora", ui-sans-serif, sans-serif;
+}
+
+/* === Custom Properties === */
+:root {
+  /* Colors — Organic/Warm Dark */
+  --color-primary: #4ADE80;
+  --color-secondary: #22C55E;
+  --color-accent: #FBBF24;
+  --color-bg: #0C0F0A;
+  --color-surface: #1A1F16;
+  --color-text: #F0F4E8;
+  --color-muted: #6B7260;
+
+  /* Borders */
+  --color-border: rgba(74, 222, 128, 0.08);
+  --color-border-hover: rgba(74, 222, 128, 0.15);
+
+  /* Typography — populated by next/font CSS variables */
+  --font-display: var(--font-sora), sans-serif;
+  --font-heading: var(--font-sora), sans-serif;
+  --font-body: var(--font-dm-sans), sans-serif;
+  --font-accent: var(--font-jetbrains-mono), monospace;
+
+  /* Radii */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+
+  /* Shadows — layered for depth on dark */
+  --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.3), 0 4px 12px rgba(0, 0, 0, 0.2);
+  --shadow-elevated: 0 2px 8px rgba(0, 0, 0, 0.4), 0 8px 24px rgba(0, 0, 0, 0.3);
+
+  /* Transitions */
+  --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+  --duration-fast: 150ms;
+  --duration-normal: 200ms;
+  --duration-slow: 400ms;
+
+  /* shadcn/ui compatible tokens */
+  --background: #0C0F0A;
+  --foreground: #F0F4E8;
+  --card: #1A1F16;
+  --card-foreground: #F0F4E8;
+  --popover: #1A1F16;
+  --popover-foreground: #F0F4E8;
+  --border: rgba(74, 222, 128, 0.08);
+  --input: rgba(74, 222, 128, 0.08);
+  --ring: #4ADE80;
+  --radius: 12px;
+  --muted: #1A1F16;
+  --muted-foreground: #6B7260;
+  --destructive: #ef4444;
+  --destructive-foreground: #F0F4E8;
+}
+
+/* === Base Styles === */
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-body);
+}
+
+/* === Glass & Depth Utilities === */
+.card-surface {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-card);
+  transition: border-color var(--duration-normal) var(--ease-smooth),
+              box-shadow var(--duration-normal) var(--ease-smooth);
+}
+
+.card-surface:hover {
+  border-color: var(--color-border-hover);
+}
+
+/* === Animation Keyframes === */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes toggleBounce {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.08); }
+  100% { transform: scale(1); }
+}
+
+/* === Animation Utilities === */
+.animate-fadeInUp {
+  animation: fadeInUp var(--duration-slow) var(--ease-smooth) both;
+}
+
+.animate-fadeIn {
+  animation: fadeIn var(--duration-normal) var(--ease-smooth) both;
+}
+
+.animate-scaleIn {
+  animation: scaleIn var(--duration-slow) var(--ease-bounce) both;
+}
+
+.animate-toggleBounce {
+  animation: toggleBounce var(--duration-fast) var(--ease-bounce);
+}
+
+/* === Typography Scale === */
+.text-display {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  color: var(--color-text);
+}
+
+.text-heading {
+  font-family: var(--font-heading);
+  font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  color: var(--color-text);
+}
+
+.text-body {
+  font-family: var(--font-body);
+  font-size: clamp(0.875rem, 1.2vw, 1rem);
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  line-height: 1.6;
+}
+
+.text-accent {
+  font-family: var(--font-accent);
+  font-size: clamp(0.8rem, 1vw, 0.9rem);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
+.text-muted {
+  color: var(--color-muted);
+}
+
+/* === Toggle Button === */
+.toggle-circle {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color var(--duration-normal) var(--ease-smooth),
+              border-color var(--duration-normal) var(--ease-smooth),
+              transform var(--duration-fast) var(--ease-bounce);
+}
+
+.toggle-circle:active {
+  transform: scale(0.95);
+}
+
+.toggle-incomplete {
+  background-color: transparent;
+  border: 2px solid var(--color-muted);
+}
+
+.toggle-complete {
+  background-color: var(--color-primary);
+  border: 2px solid var(--color-primary);
+}
+
+/* === Heatmap Cell === */
+.heatmap-cell {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-md);
+  transition: background-color var(--duration-normal) var(--ease-smooth);
+}
+
+.heatmap-completed {
+  background-color: var(--color-primary);
+}
+
+.heatmap-missed {
+  background-color: var(--color-surface);
+}
+
+.heatmap-future {
+  background-color: var(--color-surface);
+  opacity: 0.3;
+}
+
+/* === Streak Badge === */
+.streak-badge {
+  font-family: var(--font-accent);
+  font-size: 0.85rem;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.streak-active {
+  color: var(--color-accent);
+}
+
+.streak-inactive {
+  color: var(--color-muted);
+}
