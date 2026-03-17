@@ -65,7 +65,7 @@ export default function Page() {
           className="shrink-0 bg-[var(--color-primary)] text-[var(--color-bg)] hover:bg-[var(--color-secondary)] font-medium"
         >
           <Plus className="w-4 h-4 mr-2" />
-          Add habit
+          Add Habit
         </Button>
       </header>
 
