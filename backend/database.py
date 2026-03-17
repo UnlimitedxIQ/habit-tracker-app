@@ -4,8 +4,8 @@ from typing import AsyncGenerator
 
 import aiosqlite
 
-# Resolve DB path relative to this file — works regardless of cwd
-_DEFAULT_DB = str(Path(__file__).parent / "habits.db")
+# Vercel serverless: only /tmp is writable; locally use the backend/ directory.
+_DEFAULT_DB = "/tmp/habits.db" if os.environ.get("VERCEL") else str(Path(__file__).parent / "habits.db")
 DB_PATH: str = os.environ.get("DATABASE_URL", _DEFAULT_DB)
 
 # ---------------------------------------------------------------------------
