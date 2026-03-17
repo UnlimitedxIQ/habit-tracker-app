@@ -9,7 +9,7 @@ import pytest
 # ---------------------------------------------------------------------------
 
 async def _create(client, name="Test habit"):
-    resp = await client.post("/habits/", json={"name": name})
+    resp = await client.post("/habits", json={"name": name})
     assert resp.status_code == 201
     return resp.json()["id"]
 
@@ -80,7 +80,7 @@ async def test_completed_today_reflected_in_list(client):
     habit_id = await _create(client, name="Mirror test")
     await client.post(f"/habits/{habit_id}/toggle")
 
-    resp = await client.get("/habits/")
+    resp = await client.get("/habits")
     habits = {h["id"]: h for h in resp.json()}
     assert habits[habit_id]["completed_today"] is True
 

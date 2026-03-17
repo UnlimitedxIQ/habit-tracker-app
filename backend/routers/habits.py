@@ -10,12 +10,12 @@ from services import habit_service
 router = APIRouter(prefix="/habits", tags=["habits"])
 
 
-@router.get("/", response_model=list[HabitResponse])
+@router.get("", response_model=list[HabitResponse])
 async def list_habits(db: aiosqlite.Connection = Depends(get_db)):
     return await habit_service.get_all(db)
 
 
-@router.post("/", response_model=HabitResponse, status_code=201)
+@router.post("", response_model=HabitResponse, status_code=201)
 async def create_habit(
     payload: HabitCreate,
     db: aiosqlite.Connection = Depends(get_db),
